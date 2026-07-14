@@ -4,18 +4,35 @@ import { useState } from "react"
 import { BlogPost } from "./blog-card"
 import { BlogCard } from "./blog-card"
 
-const CATEGORIES = ["Blogs", "Infographics", "Use Cases", "Case Studies"]
+const CATEGORIES = ["All", "Blogs", "Infographics", "Use Cases", "Case Studies"]
+const CATEGORY_VALUE_MAP: Record<string, string> = {
+  All: "ALL",
+  Blogs: "BLOGS",
+  Infographics: "INFOGRAPHICS",
+  "Use Cases": "USE CASES",
+  "Case Studies": "CASE STUDIES",
+}
+
+function normalizeCategoryValue(value: string) {
+  return value
+    .trim()
+    .toUpperCase()
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+}
 
 interface BlogListProps {
   initialPosts: BlogPost[]
 }
 
 export function BlogList({ initialPosts }: BlogListProps) {
-  const [activeCategory, setActiveCategory] = useState("Blogs")
-  
-  const filteredPosts = activeCategory === "Blogs" 
-    ? initialPosts.filter(post => post.category === "BLOGS")
-    : initialPosts.filter(post => post.category.toLowerCase() === activeCategory.toLowerCase())
+  const [activeCategory, setActiveCategory] = useState("All")
+
+  const selectedValue = CATEGORY_VALUE_MAP[activeCategory] || "BLOGS"
+  const filteredPosts =
+    selectedValue === "ALL"
+      ? initialPosts
+      : initialPosts.filter((post) => normalizeCategoryValue(post.category || "") === selectedValue)
 
   return (
     <>

@@ -24,12 +24,14 @@ export default async function BlogPage() {
     href: post.slug.startsWith("http") ? post.slug : `/blog/${post.slug}`,
     category: post.category,
     imageGradient: post.imageGradient,
+    image: post.image || undefined,
   }))
 
-  // The featured post could be the latest post or a specific one. 
-  // Let's use the first one as featured, and the rest for the grid.
-  const featuredPost = formattedPosts.length > 0 ? formattedPosts[0] : null
-  const gridPosts = formattedPosts.length > 1 ? formattedPosts.slice(1) : []
+  // Prefer a BLOGS item for the featured slot so category tabs can still show
+  // posts created in other categories.
+  const featuredPost = formattedPosts.find((post) => post.category === "BLOGS") || (formattedPosts[0] ?? null)
+  // Keep all posts in the grid so the featured post also appears in its category tab.
+  const gridPosts = formattedPosts
 
   return (
     <div className="min-h-screen bg-background flex flex-col" suppressHydrationWarning>

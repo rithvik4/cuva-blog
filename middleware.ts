@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { verifyAdminSessionToken } from '@/lib/admin-auth'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   // Check if it's an admin path
@@ -13,10 +14,10 @@ export function middleware(request: NextRequest) {
     }
 
     // Check for our secure admin_token cookie
-    const token = request.cookies.get('admin_token')
+    const token = request.cookies.get('admin_token')?.value
 
     // If no token exists, redirect immediately to the login page
-    if (!token || token.value !== 'authenticated') {
+    if (!(await verifyAdminSessionToken(token))) {
       return NextResponse.redirect(new URL('/blog/admin/login', request.url))
     }
   }

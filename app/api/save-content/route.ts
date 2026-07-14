@@ -2,9 +2,19 @@ import { NextResponse } from "next/server"
 import { connectDB } from "@/lib/db"
 import { Post } from "@/lib/Post"
 import { Image } from "@/lib/Image"
+import { cookies } from "next/headers"
+import { verifyAdminSessionToken } from "@/lib/admin-auth"
+import { buildBlogHtmlFromSections, normalizeBlogSections, sanitizeBlogHtml } from "@/lib/blog-content"
+import { generateUniquePostSlug, normalizeCategory, slugifyTitle } from "@/lib/post-utils"
 
 export async function POST(req: Request) {
   try {
+    const token = (await cookies()).get("admin_token")?.value
+
+    if (!(await verifyAdminSessionToken(token))) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
+    }
+
     const body = await req.json()
     const { type, payload } = body
 
@@ -16,23 +26,29 @@ export async function POST(req: Request) {
 
     if (type === "post") {
       // Basic validation for post
-      const { title, slug, excerpt, content, author, date, category, image } = payload
+      const { title, slug, excerpt, content, sections, author, date, category, image } = payload
+      const normalizedSections = normalizeBlogSections(sections)
+      const generatedContent = buildBlogHtmlFromSections(normalizedSections)
+      const effectiveContent = generatedContent || String(content || "")
 
-      if (!title || !slug || !excerpt || !content || !author || !date || !category) {
+      if (!title || !slug || !excerpt || !effectiveContent.trim() || !author || !date || !category) {
         return NextResponse.json({ success: false, error: "Missing required post fields" }, { status: 400 })
       }
 
-      // Ensure slug is clean
-      const cleanSlug = slug.trim().startsWith("http") ? slug.trim() : slug.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+      const baseSlug = slugifyTitle(String(slug || title))
+      const cleanSlug = await generateUniquePostSlug(baseSlug)
+      const safeContent = sanitizeBlogHtml(String(effectiveContent))
+      const safeCategory = normalizeCategory(String(category))
 
       const newPost = new Post({
-        title,
+        title: String(title).trim(),
         slug: cleanSlug,
-        excerpt,
-        content,
-        author,
-        date,
-        category,
+        excerpt: String(excerpt).trim(),
+        content: safeContent,
+        sections: normalizedSections,
+        author: String(author).trim(),
+        date: String(date).trim(),
+        category: safeCategory,
         imageGradient: payload.imageGradient || "from-[#f1f8e9] to-[#e8f5e9]",
         image: image || null
       })
@@ -61,8 +77,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "Invalid type. Must be 'post' or 'image'" }, { status: 400 })
     }
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Save content error:", error)
-    return NextResponse.json({ success: false, error: error.message || "Failed to save content" }, { status: 500 })
+    const message = error instanceof Error ? error.message : "Failed to save content"
+    return NextResponse.json({ success: false, error: message }, { status: 500 })
   }
 }

@@ -1,11 +1,19 @@
 "use client"
 
-import { useState } from "react"
-import { UploadCloud, Image as ImageIcon, X } from "lucide-react"
+import { useMemo, useState } from "react"
+import { UploadCloud, Image as ImageIcon } from "lucide-react"
 
-export function ImageUpload() {
+export function ImageUpload({ initialImageUrl }: { initialImageUrl?: string | null }) {
   const [dragActive, setDragActive] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+
+  const previewUrl = useMemo(() => {
+    if (selectedFile) {
+      return URL.createObjectURL(selectedFile)
+    }
+
+    return initialImageUrl || ""
+  }, [selectedFile, initialImageUrl])
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault()
@@ -64,9 +72,10 @@ export function ImageUpload() {
         />
 
         <div className="flex flex-col items-center justify-center text-center px-4 w-full">
-          {selectedFile ? (
+          {previewUrl ? (
             <>
-              <p className="text-[12px] font-semibold text-slate-700 truncate w-full">{selectedFile.name}</p>
+              <img src={previewUrl} alt="Cover preview" className="h-10 w-16 rounded object-cover border border-slate-200 mb-1.5" />
+              <p className="text-[12px] font-semibold text-slate-700 truncate w-full">{selectedFile ? selectedFile.name : "Current cover image"}</p>
               <p className="text-[10px] font-medium text-[#5B3CF5] mt-1">Change</p>
             </>
           ) : (
