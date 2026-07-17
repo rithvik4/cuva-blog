@@ -58,7 +58,7 @@ export function BlogList({ initialPosts }: BlogListProps) {
       <section>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredPosts.map((post) => (
-            <BlogCard key={post.title} post={post} />
+            <BlogCard key={post.slug} post={post} />
           ))}
         </div>
       </section>

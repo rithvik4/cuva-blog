@@ -626,7 +626,7 @@ function renderBlockFields(
               <p className="text-[12px] text-slate-600 font-medium">Pending uploads</p>
               {block.imageMode === "multiple" ? (
                 pendingFiles.map((file, pendingIndex) => (
-                  <div key={`${file.name}-${pendingIndex}`} className="rounded-lg border border-slate-200 bg-white px-3 py-2 flex items-center justify-between gap-3">
+                  <div key={`${file.lastModified}-${file.name}-${file.size}`} className="rounded-lg border border-slate-200 bg-white px-3 py-2 flex items-center justify-between gap-3">
                     <p className="text-[12px] text-slate-600 truncate">{file.name}</p>
                     <button
                       type="button"
