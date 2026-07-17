@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { forwardRef, useEffect, useMemo, useImperativeHandle, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { AlignLeft, ChevronDown, GripVertical, Heading, Image as ImageIcon, List, PlusCircle, Rows3, Trash2 } from "lucide-react"
 import type { BlogSection, BlogSectionBlock } from "@/lib/blog-content"
@@ -15,6 +15,7 @@ type AdminImageHistoryItem = {
 }
 
 const MAX_IMAGE_UPLOAD_COUNT = 6
+let idCounter = 0
 
 function DropdownField({ children }: { children: ReactNode }) {
   return (
@@ -85,7 +86,8 @@ const BLOCK_OPTIONS: Array<{ value: BlockType; label: string }> = [
 ]
 
 function makeId() {
-  return `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`
+  idCounter += 1
+  return `builder-id-${idCounter}`
 }
 
 function makeBlock(type: BlockType): AdminSectionBlock {
@@ -955,7 +957,10 @@ function renderBlockFields(
   )
 }
 
-export function BlogSectionsBuilder({ initialSections = [] }: { initialSections?: BlogSection[] }) {
+export const BlogSectionsBuilder = forwardRef<
+  { getSections: () => BlogSection[] },
+  { initialSections?: BlogSection[] }
+>(function BlogSectionsBuilder({ initialSections = [] }, ref) {
   const [sections, setSections] = useState<AdminBlogSection[]>(() => {
     if (initialSections.length > 0) {
       return initialSections.map(makeSectionFromInitial)
@@ -998,8 +1003,137 @@ export function BlogSectionsBuilder({ initialSections = [] }: { initialSections?
       })
       .filter((section) => section.blocks.length > 0)
 
-    return JSON.stringify(payload)
+    return payload
   }, [sections])
+
+  // Process pending image uploads and upload to server
+  const processImageUploads = async (): Promise<BlogSection[]> => {
+    // Create a copy of sections to update
+    const updatedSections = sections.map(section => ({
+      ...section,
+      blocks: section.blocks.map(block => {
+        if (block.type !== "image") return block
+        
+        const fileInput = imageInputRefs.current[block.id]
+        if (!fileInput?.files?.length) return block
+        
+        // Mark that we'll process these files
+        return { ...block, _pendingFiles: Array.from(fileInput.files) } as any
+      })
+    }))
+
+    // Process each file and upload
+    for (const section of updatedSections) {
+      for (const block of section.blocks) {
+        if (block.type !== "image" || !(block as any)._pendingFiles) continue
+
+        const filesToProcess = (block as any)._pendingFiles as File[]
+        const processedImages: Array<{ url: string; alt: string; caption: string }> = []
+
+        for (const file of filesToProcess) {
+          const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = () => {
+              const dataUrl = reader.result as string
+              const base64String = dataUrl.split(",")[1] || ""
+              resolve(base64String)
+            }
+            reader.onerror = reject
+            reader.readAsDataURL(file)
+          })
+
+          // Upload to server
+          try {
+            const uploadResponse = await fetch("/api/upload-image", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                imageBase64: base64,
+                imageFilename: file.name,
+                imageMimeType: file.type,
+                altText: block.imageAlt || file.name,
+              }),
+            })
+
+            const uploadResult = await uploadResponse.json()
+            if (uploadResult.success && uploadResult.data?.url) {
+              processedImages.push({
+                url: uploadResult.data.url,
+                alt: block.imageAlt || file.name,
+                caption: block.title || "",
+              })
+            } else {
+              throw new Error(uploadResult.error || "Upload failed")
+            }
+          } catch (err) {
+            console.error("Failed to upload image:", err)
+            throw new Error(`Failed to upload image: ${file.name}`)
+          }
+        }
+
+        // Update the block with uploaded images
+        if (processedImages.length > 0) {
+          block.imageHistory = processedImages.map((img) => ({
+            url: img.url,
+            alt: img.alt,
+            caption: img.caption,
+          }))
+          if (block.imageMode === "single") {
+            block.imageUrl = processedImages[0].url
+          }
+          // Clear the file input
+          const fileInput = imageInputRefs.current[block.id]
+          if (fileInput) {
+            const dataTransfer = new DataTransfer()
+            fileInput.files = dataTransfer.files
+          }
+        }
+
+        // Remove temp marker
+        delete (block as any)._pendingFiles
+      }
+    }
+
+    // Update sections state to trigger re-render of encodedSections
+    setSections(updatedSections)
+    
+    // Return the re-encoded sections with proper serialization for all block types
+    const finalSections = updatedSections
+      .map((section, sectionIndex) => {
+        const serializedBlocks = section.blocks.map((block, blockIndex) => {
+          // Use serializeBlock for ALL block types (not just images)
+          return serializeBlock(block, sectionIndex, blockIndex)
+        })
+        
+        const blocks = serializedBlocks.filter((entry) => entry.hasContent).map((entry) => entry.block)
+
+        return {
+          heading: "",
+          subheading: "",
+          content: "",
+          bulletPoints: [] as string[],
+          imageUrl: "",
+          imageAlt: "",
+          imagePosition: "right" as const,
+          blocks,
+        }
+      })
+      .filter((section) => section.blocks.length > 0)
+
+    return finalSections
+  }
+
+  // Expose getSections and processImages via ref
+  useImperativeHandle(
+    ref,
+    () => ({
+      getSections: () => encodedSections as BlogSection[],
+      processImageUploads,
+    }),
+    [encodedSections, sections]
+  )
 
   const addSection = () => {
     setSections((current) => [...current, makeSection()])
@@ -1155,7 +1289,7 @@ export function BlogSectionsBuilder({ initialSections = [] }: { initialSections?
         Each section can contain multiple reusable blocks. Use the Section Blocks dropdown beside every section to add heading, paragraph, image, quote, table, checklist, list, CTA, or divider blocks.
       </p>
 
-      <input type="hidden" name="sections" value={encodedSections} readOnly />
+      <input type="hidden" name="sections" value={JSON.stringify(encodedSections)} readOnly />
 
       <div className="space-y-4 overflow-y-auto pr-1">
         {sections.map((section, sectionIndex) => (
@@ -1250,4 +1384,4 @@ export function BlogSectionsBuilder({ initialSections = [] }: { initialSections?
       </div>
     </div>
   )
-}
+})

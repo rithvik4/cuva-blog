@@ -4,11 +4,10 @@ import { useState } from "react"
 import { BlogPost } from "./blog-card"
 import { BlogCard } from "./blog-card"
 
-const CATEGORIES = ["All", "Blogs", "Infographics", "Use Cases", "Case Studies"]
+const CATEGORIES = ["All", "Blogs", "Use Cases", "Case Studies"]
 const CATEGORY_VALUE_MAP: Record<string, string> = {
   All: "ALL",
   Blogs: "BLOGS",
-  Infographics: "INFOGRAPHICS",
   "Use Cases": "USE CASES",
   "Case Studies": "CASE STUDIES",
 }

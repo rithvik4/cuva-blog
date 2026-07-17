@@ -1,6 +1,4 @@
-import { Post } from "@/lib/Post"
-
-const ALLOWED_CATEGORIES = new Set(["BLOGS", "INFOGRAPHICS", "USE CASES", "CASE STUDIES"])
+const ALLOWED_CATEGORIES = new Set(["BLOGS", "USE CASES", "CASE STUDIES"])
 
 export function slugifyTitle(input: string) {
   const slug = input
@@ -14,11 +12,12 @@ export function slugifyTitle(input: string) {
   return slug || "post"
 }
 
-export async function generateUniquePostSlug(baseSlug: string) {
+export function generateUniquePostSlug(baseSlug: string, existingSlugs: string[]) {
+  const existing = new Set(existingSlugs)
   let candidate = baseSlug
   let counter = 2
 
-  while (await Post.exists({ slug: candidate })) {
+  while (existing.has(candidate)) {
     candidate = `${baseSlug}-${counter}`
     counter += 1
   }

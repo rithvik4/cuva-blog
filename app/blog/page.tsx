@@ -2,17 +2,13 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { FeaturedPost } from "@/components/blog/featured-post"
 import { BlogList } from "@/components/blog/blog-list"
-import { connectDB } from "@/lib/db"
-import { Post } from "@/lib/Post"
+import { listPosts } from "@/lib/blog-store"
 
 // Make the page dynamic so it fetches fresh data
 export const dynamic = "force-dynamic"
 
 export default async function BlogPage() {
-  await connectDB()
-
-  // Fetch all posts, lean() converts Mongoose objects to plain JS objects
-  const allPosts = await Post.find({}).sort({ createdAt: -1 }).lean()
+  const allPosts = await listPosts()
 
   // Format for the client
   const formattedPosts = allPosts.map(post => ({
@@ -22,7 +18,7 @@ export default async function BlogPage() {
     author: post.author,
     date: post.date,
     href: post.slug.startsWith("http") ? post.slug : `/blog/${post.slug}`,
-    category: post.category,
+    category: post.category === "INFOGRAPHICS" ? "BLOGS" : post.category,
     imageGradient: post.imageGradient,
     image: post.image || undefined,
   }))

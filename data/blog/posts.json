@@ -1,0 +1,722 @@
+[
+  {
+    "id": "1784275310616-kiv3d74b",
+    "title": "Agent identity: Agents that act and appear as themselves",
+    "slug": "agent-identity-agents-that-act-and-appear-as-themselves",
+    "excerpt": "The triage agent isn't invisible automation anymore — it shows up as itself everywhere it works. Message it directly in Slack or Teams the way you'd message a colleague, and the answer comes back from it, in that same conversation. Its Jira comments are authored by its own account. Its pull requests come from its own GitHub App — reviewable, and subject to branch protections like any other contributor. People collaborate with what they can see and name; now the agent is something you can see and name.",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><p>In our experience building and implementing agents, customers have run into one roadblock over and over again: how can agents act as themselves? It usually goes like this. An engineer builds a triage agent — it reads incoming tickets, diagnoses the issue, suggests the fix from the team's runbooks. It works beautifully. Right when it’s ready to take on more work, it runs into four key problems:</p><p>Because the agent borrows the identity of whoever runs it, it only works for colleagues who already have access to every system behind it. When someone senior runs it, the opposite problem appears: the agent inherits all of their access, far more than ticket triage ever needed. Finally, long-running agents are hampered by expiring access tokens that they borrow from users.</p><p>Meanwhile, every fix the agent suggested was posted under someone's name. The audit trail for its work shows that a human who never read the agent’s work performed all of it. Because the agent is borrowing a user’s identity, it’s less productive.</p><p>Last month we announced independent agents — AI coworkers built for autonomous, multiplayer work. One of their core components was agent identity. Today we're opening agent identity in public beta for Glean customers: an agent can now act through its own service account credentials — its own bot in Slack, its own account in Jira, its own App in GitHub — registered and deliberately scoped by an admin. Set once, it's the same agent for everyone who runs it.</p><p>Here's what that changes.</p><h3>A name, a face, and its own presence across surfaces</h3><p>The triage agent isn't invisible automation anymore — it shows up as itself everywhere it works. Message it directly in Slack or Teams the way you'd message a colleague, and the answer comes back from it, in that same conversation. Its Jira comments are authored by its own account. Its pull requests come from its own GitHub App — reviewable, and subject to branch protections like any other contributor. People collaborate with what they can see and name; now the agent is something you can see and name.</p><h3>Trusted with exactly what the job needs</h3><p>This approach streamlines data source access, because who can invoke an agent is now decoupled from what the agent is trusted to do. The executive with elevated access can run agents without worrying they will accidentally share confidential information with the rest of the company. The customer success manager with no direct access to GCP logs can run a triage agent without needing their own access. Every user gets the same credential, set deliberately by an admin.</p><p>Actions are properly attributed, too. Every action lands in the audit trail under the agent's own account, with the person or schedule that triggered it recorded alongside. Automated work and human work stay distinguishable, streamlining compliance.</p><h3>Scheduled work that doesn't silently die</h3><p>The overnight queue gets worked every night, because the agent runs on its own credentials, not on anyone's session. It categorizes tickets, comments with the right runbook, delivers its morning digest — through vacations, password resets, and role changes. No human token underneath, nothing to silently expire.</p><h3>Your agents have been doing the work. Now they can sign it.</h3><p>The hard part of enterprise AI was never getting agents to act — it was extending trust in a way an organization could stand behind. With agent identity, agents act through their own scoped service credentials — visible in the audit trail, and governed by the people responsible for governing access: admins can rotate or revoke any credential, for one system or all of them, at any time.</p><p>The feature is now available in beta for our Glean customers. Please reach out to your admin to enable it.</p></div></section><section class=\"blog-section\"><div class=\"blog-section-copy\"><h2>Your agents have been doing the work. Now they can sign it.</h2><p>The hard part of enterprise AI was never getting agents to act — it was extending trust in a way an organization could stand behind. With agent identity, agents act through their own scoped service credentials — visible in the audit trail, and governed by the people responsible for governing access: admins can rotate or revoke any credential, for one system or all of them, at any time.</p><p>The feature is now available in beta for our Glean customers. Please reach out to your admin to enable it.</p></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "In our experience building and implementing agents, customers have run into one roadblock over and over again: how can agents act as themselves? It usually goes like this. An engineer builds a triage agent — it reads incoming tickets, diagnoses the issue, suggests the fix from the team's runbooks. It works beautifully. Right when it’s ready to take on more work, it runs into four key problems:\n\nBecause the agent borrows the identity of whoever runs it, it only works for colleagues who already have access to every system behind it. When someone senior runs it, the opposite problem appears: the agent inherits all of their access, far more than ticket triage ever needed. Finally, long-running agents are hampered by expiring access tokens that they borrow from users.\n\nMeanwhile, every fix the agent suggested was posted under someone's name. The audit trail for its work shows that a human who never read the agent’s work performed all of it. Because the agent is borrowing a user’s identity, it’s less productive. \n\nLast month we announced independent agents — AI coworkers built for autonomous, multiplayer work. One of their core components was agent identity. Today we're opening agent identity in public beta for Glean customers: an agent can now act through its own service account credentials — its own bot in Slack, its own account in Jira, its own App in GitHub — registered and deliberately scoped by an admin. Set once, it's the same agent for everyone who runs it.\n\nHere's what that changes."
+          },
+          {
+            "type": "heading",
+            "text": "A name, a face, and its own presence across surfaces",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "The triage agent isn't invisible automation anymore — it shows up as itself everywhere it works. Message it directly in Slack or Teams the way you'd message a colleague, and the answer comes back from it, in that same conversation. Its Jira comments are authored by its own account. Its pull requests come from its own GitHub App — reviewable, and subject to branch protections like any other contributor. People collaborate with what they can see and name; now the agent is something you can see and name."
+          },
+          {
+            "type": "heading",
+            "text": "Trusted with exactly what the job needs",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "This approach streamlines data source access, because who can invoke an agent is now decoupled from what the agent is trusted to do. The executive with elevated access can run agents without worrying they will accidentally share confidential information with the rest of the company. The customer success manager with no direct access to GCP logs can run a triage agent without needing their own access. Every user gets the same credential, set deliberately by an admin.\n\nActions are properly attributed, too. Every action lands in the audit trail under the agent's own account, with the person or schedule that triggered it recorded alongside. Automated work and human work stay distinguishable, streamlining compliance."
+          },
+          {
+            "type": "heading",
+            "text": "Scheduled work that doesn't silently die",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "The overnight queue gets worked every night, because the agent runs on its own credentials, not on anyone's session. It categorizes tickets, comments with the right runbook, delivers its morning digest — through vacations, password resets, and role changes. No human token underneath, nothing to silently expire."
+          },
+          {
+            "type": "heading",
+            "text": "Your agents have been doing the work. Now they can sign it.",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "The hard part of enterprise AI was never getting agents to act — it was extending trust in a way an organization could stand behind. With agent identity, agents act through their own scoped service credentials — visible in the audit trail, and governed by the people responsible for governing access: admins can rotate or revoke any credential, for one system or all of them, at any time.\n\nThe feature is now available in beta for our Glean customers. Please reach out to your admin to enable it."
+          }
+        ]
+      },
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "heading",
+            "text": "Your agents have been doing the work. Now they can sign it.",
+            "level": "h2"
+          },
+          {
+            "type": "paragraph",
+            "content": "The hard part of enterprise AI was never getting agents to act — it was extending trust in a way an organization could stand behind. With agent identity, agents act through their own scoped service credentials — visible in the audit trail, and governed by the people responsible for governing access: admins can rotate or revoke any credential, for one system or all of them, at any time.\n\nThe feature is now available in beta for our Glean customers. Please reach out to your admin to enable it."
+          }
+        ]
+      }
+    ],
+    "author": "Cuva Team",
+    "date": "July 17, 2026",
+    "category": "CASE STUDIES",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-17T08:01:50.616Z",
+    "updatedAt": "2026-07-17T09:59:32.350Z"
+  },
+  {
+    "id": "1784223920871-8k5bpzo0",
+    "title": "5 Smart Ways To Integrate AI In Your Business",
+    "slug": "5-smart-ways-to-integrate-ai-in-your-business",
+    "excerpt": "Today’s AI tools are more advanced than ever, and savvy business leaders are integrating AI in business areas that are long due for improvement. Artificial intelligence and machine learning enable teams to work smarter, more efficiently, and with fewer costly business errors. If you’re seeking a way to help relieve your human employees from time-consuming, manual tasks, here are some smart ways to introduce AI into your business operations — and gain a competitive advantage in the process.",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><p>Business leaders have been bullish on artificial intelligence for years. A 2017 survey from MIT Sloan and Boston Consulting Group found that 84% of business leaders believed AI would provide a competitive advantage to their companies.</p><p>Today’s AI tools are more advanced than ever, and savvy business leaders are integrating AI in business areas that are long due for improvement. Artificial intelligence and machine learning enable teams to work smarter, more efficiently, and with fewer costly business errors. If you’re seeking a way to help relieve your human employees from time-consuming, manual tasks, here are some smart ways to introduce AI into your business operations — and gain a competitive advantage in the process.</p><h3>Supercharge your accounts payable</h3><p>In the past, accounts payable has been a time-consuming and error-prone process for many finance teams. Some companies need up to 25 days to process a single invoice — risking late fees and frustrated vendors.</p><p>Adding artificial intelligence to your accounts payable process can simplify the entire business function. A tool like Glean AI enables teams to automate workflows, immediately see billing inaccuracies, and stay organized. Glean AI’s invoice automation can be configured to deliver the context that financial leaders need to approve invoices, so bills can be paid on time.</p><p>Likewise, Glean’s AI syncs invoices with your existing accounting tools and systems, such as QuickBooks and Xero. Eliminate manual data entry with integrations that automatically sync bills, bill payments, and prepaid amortizations to your GL, saving time on reconciliations and avoiding costly errors.</p><p>[Read more: The Benefits Of AP Automation]</p><p>Ultimately, companies can save 60% to 90% of the average cost per invoice by integrating AP automation into their business practices. Accounts payable AI in business can reduce the number of manual steps in the AP process – from invoice receipt all the way through to payment.  Something that used to take up to 10 days can now be completed in minutes.</p></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Business leaders have been bullish on artificial intelligence for years. A 2017 survey from MIT Sloan and Boston Consulting Group found that 84% of business leaders believed AI would provide a competitive advantage to their companies.\n\nToday’s AI tools are more advanced than ever, and savvy business leaders are integrating AI in business areas that are long due for improvement. Artificial intelligence and machine learning enable teams to work smarter, more efficiently, and with fewer costly business errors. If you’re seeking a way to help relieve your human employees from time-consuming, manual tasks, here are some smart ways to introduce AI into your business operations — and gain a competitive advantage in the process."
+          },
+          {
+            "type": "heading",
+            "text": "Supercharge your accounts payable",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "In the past, accounts payable has been a time-consuming and error-prone process for many finance teams. Some companies need up to 25 days to process a single invoice — risking late fees and frustrated vendors.\n\nAdding artificial intelligence to your accounts payable process can simplify the entire business function. A tool like Glean AI enables teams to automate workflows, immediately see billing inaccuracies, and stay organized. Glean AI’s invoice automation can be configured to deliver the context that financial leaders need to approve invoices, so bills can be paid on time.\n\nLikewise, Glean’s AI syncs invoices with your existing accounting tools and systems, such as QuickBooks and Xero. Eliminate manual data entry with integrations that automatically sync bills, bill payments, and prepaid amortizations to your GL, saving time on reconciliations and avoiding costly errors.\n\n[Read more: The Benefits Of AP Automation]\n\nUltimately, companies can save 60% to 90% of the average cost per invoice by integrating AP automation into their business practices. Accounts payable AI in business can reduce the number of manual steps in the AP process – from invoice receipt all the way through to payment.  Something that used to take up to 10 days can now be completed in minutes."
+          }
+        ]
+      }
+    ],
+    "author": "Cuva Team",
+    "date": "July 17, 2026",
+    "category": "BLOGS",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-16T17:45:20.871Z",
+    "updatedAt": "2026-07-17T08:05:59.809Z"
+  },
+  {
+    "id": "1784216562009-xp9ub7jc",
+    "title": "The 10 best AI voice assistants in 2026: A comprehensive guide",
+    "slug": "the-10-best-ai-voice-assistants-in-2026-a-comprehensive-guide",
+    "excerpt": "From handling big, meaningful complex tasks to small everyday stuff, like searching, scheduling, replying, following up, re-checking… and doing it all again tomorrow, AI voice assistants can handle them all at just the command of your voice.",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><p>Voice, for years, has been a difficult channel to automate. But not anymore.</p><p>Thanks to conversational AI, voice assistants of yesterday are way more intuitive and sophisticated today.</p><p>From handling big, meaningful complex tasks to small everyday stuff, like searching, scheduling, replying, following up, re-checking… and doing it all again tomorrow, AI voice assistants can handle them all at just the command of your voice.</p><div class=\"blog-block-cta align-center\"><p>Around 97% of mobile users, as per the IDAP research, use AI-powered voice assistants for their personal and professional reasons.</p><a class=\"cta-button\" href=\"https://www.mindinventory.com/blog/ai-statistics/\" target=\"_blank\" rel=\"noopener noreferrer\">Source</a></div><p>You must have used or heard of hands-free voice assistants such as Siri, Alexa, Gemini, and more that help us with our work, saving not only our time but also conveniently managing our everyday tasks.</p><p>However, when we think about them, a lot of questions pop up in our head</p><div class=\"blog-block-image layout-single align-center is-content\"><figure><img src=\"/uploads/1784271899705-image-5.jpg\" alt=\"image 5.jpg\" loading=\"lazy\" /></figure></div><ul><li>What are voice assistants?</li><li>Which is the best AI assistant currently?</li><li>What is the most used voice assistant?</li><li>Is there an AI that you can talk to with voice?</li><li>Which AI does Elon Musk use?</li><li>What is the best AI for personal use?</li><li>Are we using them to their best capability?</li></ul><p>This comprehensive guide is created to answer all these questions and more to help you choose the top AI voice assistant in 2026.</p><p>Let’s start with the basic one.</p><h2>What is an AI voice assistant?</h2><p>It is a program designed to work on your voice commands. A digital assistant that understands what you say and follows your command to the T. You don’t have to type or write anything, just speak the way you do and your 24x7x365 assistant will respond accordingly with an answer or an action.</p><p>You can ask it to schedule your appointment, set an alarm, remind you to take your medicines, fix a meeting with your developer, cancel a placed order, call your mother, play your favorite music, or tell you what’s going on in the world.</p><p>AI voice assistants are truly elevating the way we interact with hands-free technology.</p></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "Voice, for years, has been a difficult channel to automate. But not anymore. \n\nThanks to conversational AI, voice assistants of yesterday are way more intuitive and sophisticated today. \n\nFrom handling big, meaningful complex tasks to small everyday stuff, like searching, scheduling, replying, following up, re-checking… and doing it all again tomorrow, AI voice assistants can handle them all at just the command of your voice."
+          },
+          {
+            "type": "cta",
+            "text": "Around 97% of mobile users, as per the IDAP research, use AI-powered voice assistants for their personal and professional reasons.",
+            "buttonLabel": "Source",
+            "buttonUrl": "https://www.mindinventory.com/blog/ai-statistics/",
+            "alignment": "center"
+          },
+          {
+            "type": "paragraph",
+            "content": "You must have used or heard of hands-free voice assistants such as Siri, Alexa, Gemini, and more that help us with our work, saving not only our time but also conveniently managing our everyday tasks.\n\nHowever, when we think about them, a lot of questions pop up in our head"
+          },
+          {
+            "type": "image",
+            "mode": "single",
+            "imageUrl": "/uploads/1784271899705-image-5.jpg",
+            "imageAlt": "image 5.jpg",
+            "title": "",
+            "titlePosition": "bottom",
+            "uploadKey": "0-3",
+            "alignment": "center",
+            "width": "content",
+            "layout": "single",
+            "images": []
+          },
+          {
+            "type": "bulletList",
+            "items": [
+              "What are voice assistants?",
+              "Which is the best AI assistant currently?",
+              "What is the most used voice assistant?",
+              "Is there an AI that you can talk to with voice?",
+              "Which AI does Elon Musk use?",
+              "What is the best AI for personal use?",
+              "Are we using them to their best capability?"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": "This comprehensive guide is created to answer all these questions and more to help you choose the top AI voice assistant in 2026.\n\nLet’s start with the basic one."
+          },
+          {
+            "type": "heading",
+            "text": "What is an AI voice assistant?",
+            "level": "h2"
+          },
+          {
+            "type": "paragraph",
+            "content": "It is a program designed to work on your voice commands. A digital assistant that understands what you say and follows your command to the T. You don’t have to type or write anything, just speak the way you do and your 24x7x365 assistant will respond accordingly with an answer or an action.\n\nYou can ask it to schedule your appointment, set an alarm, remind you to take your medicines, fix a meeting with your developer, cancel a placed order, call your mother, play your favorite music, or tell you what’s going on in the world. \n\nAI voice assistants are truly elevating the way we interact with hands-free technology."
+          }
+        ]
+      }
+    ],
+    "author": "Cuva Team",
+    "date": "July 17, 2026",
+    "category": "USE CASES",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-16T15:42:42.009Z",
+    "updatedAt": "2026-07-17T09:58:06.890Z"
+  },
+  {
+    "id": "6a58921704cc93d90b31add1",
+    "title": "Knowledge graph vs vector database: how to choose your AI foundation",
+    "slug": "knowledge-graph-vs-vector-database-how-to-choose-your-ai-foundation",
+    "excerpt": "In this blog, we’ll define both approaches, compare them honestly, and show how Glean combines them—so you can make a grounded decision for your own AI roadmap.",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><p>When enterprises start getting serious about AI—beyond the pilots, beyond the demos—a foundational question surfaces fast: how do we represent our knowledge so AI can actually use it? Underneath most mature AI initiatives, you'll find a knowledge graph, a vector database, or a combination of both—each handling a different side of the same challenge: making structured and unstructured data work together for AI.</p><p>On the surface, the choice can look like a technical preference. In reality, it has big implications for how safely your agents behave, how reliably they answer questions, how easily you can govern access, and how fast you can ship new AI capabilities.</p><p>In this blog, we’ll define both approaches, compare them honestly, and show how Glean combines them—so you can make a grounded decision for your own AI roadmap.</p><h2>What is a knowledge graph?</h2><p>A knowledge graph is a structured model of how things in your organization relate to each other. It doesn't just store content—it stores entities (people, teams, documents, tickets, accounts, systems) and the relationships between them.</p><p>Think of it as a living map of your business:</p><ul><li>Nodes represent entities: “Customer: Acme Corp”, “Team: Security”, “Doc: Incident Postmortem 2512”</li><li>Edges represent relationships: “owns”, “reports to”, “references”, “depends on”</li><li>Types and schemas define what entities exist and which relationships are valid</li></ul><p>Knowledge graphs are stored and queried in a graph database—purpose-built infrastructure designed for querying relationships at scale. Unlike a traditional relational database, which stores data in rows and columns, a graph database is built to traverse connections—making it far more natural for modeling how work actually flows across an organization.</p><h3>Strengths of knowledge graphs</h3><p>Knowledge graphs shine in areas where structure, relationships, and governance matter.</p><h4>Explainability and reasoning</h4><p>Because the graph is explicit, you can trace why a result emerged. When an AI agent surfaces a document or recommends a next step, it can show its work: \"This incident is linked to that service, which is owned by this team, whose runbook is here.\" That kind of traceability is essential for trust, debugging, anomaly detection, and regulatory compliance.</p><h4>Complex queries and workflows</h4><p>Graphs are built for multi-hop reasoning:</p><ol><li>\"Show me open incidents affecting our top 20 customers in EMEA.\"</li><li>\"Which dashboards are used by the teams working on this OKR?\"</li><li>\"What are the downstream services of this database, and who owns them?\"</li></ol><p>These questions depend on graph traversal—following chains of relationships across entities—not on matching keywords.</p><h2>What is a vector database?</h2><p>A vector database stores numerical representations—called vector embeddings—of unstructured data. These embeddings are produced by machine learning models and capture semantic meaning: items with similar meaning end up near each other in multi-dimensional space.</p><p>Instead of asking \"which documents contain these exact words?\", a vector search converts your question into a query vector—a numerical representation of what you're looking for—then finds the stored vectors closest to it. This approach enables efficient similarity search at scale—retrieving semantically relevant results across millions of documents in milliseconds.</p><h3>Strengths of vector databases</h3><p>Vector databases are the workhorse behind a lot of modern AI applications, especially retrieval-augmented generation (RAG) and semantic search.</p><h4>Semantic search across unstructured content</h4><p>You can ingest large volumes of raw data—wiki pages, PDFs, tickets, code comments—and get useful search behavior without hand-crafted taxonomies. The model handles synonyms, paraphrases, and related concepts out of the box.</p><h4>Natural fit for LLM workflows</h4><p>Vector databases plug cleanly into large language model pipelines: embed query → retrieve neighbors → pass to the model → generate answer. This pattern is now standard for grounding AI on internal knowledge.</p><h2>Choosing the right approach for your workflows</h2><p>Rather than debating abstractly, it helps to look at specific workflow scenarios.</p><h3>Workflows that benefit from knowledge graphs</h3><p>Knowledge graphs are particularly valuable when:</p><ul><li>Multi-step workflows cross teams and systems: onboarding, incident response, customer escalations, deal cycles</li><li>Traceability matters: audits, compliance reviews, executive sign-offs</li><li>Ownership and responsibility are central: \"Who should act on this alert?\" or \"Which team maintains this runbook?\"</li><li>Relationships are as important as content: recommendation systems, customer hierarchies, partner ecosystems, system dependencies</li></ul><p>For these workflows, AI agents need more than “what looks relevant.” They need to understand the complex relationships between entities and who is allowed to do what.</p></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "When enterprises start getting serious about AI—beyond the pilots, beyond the demos—a foundational question surfaces fast: how do we represent our knowledge so AI can actually use it? Underneath most mature AI initiatives, you'll find a knowledge graph, a vector database, or a combination of both—each handling a different side of the same challenge: making structured and unstructured data work together for AI.\n\nOn the surface, the choice can look like a technical preference. In reality, it has big implications for how safely your agents behave, how reliably they answer questions, how easily you can govern access, and how fast you can ship new AI capabilities.\n\nIn this blog, we’ll define both approaches, compare them honestly, and show how Glean combines them—so you can make a grounded decision for your own AI roadmap."
+          },
+          {
+            "type": "heading",
+            "text": "What is a knowledge graph?",
+            "level": "h2"
+          },
+          {
+            "type": "paragraph",
+            "content": "A knowledge graph is a structured model of how things in your organization relate to each other. It doesn't just store content—it stores entities (people, teams, documents, tickets, accounts, systems) and the relationships between them.\n\nThink of it as a living map of your business:"
+          },
+          {
+            "type": "bulletList",
+            "items": [
+              "Nodes represent entities: “Customer: Acme Corp”, “Team: Security”, “Doc: Incident Postmortem 2512”",
+              "Edges represent relationships: “owns”, “reports to”, “references”, “depends on”",
+              "Types and schemas define what entities exist and which relationships are valid"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": "Knowledge graphs are stored and queried in a graph database—purpose-built infrastructure designed for querying relationships at scale. Unlike a traditional relational database, which stores data in rows and columns, a graph database is built to traverse connections—making it far more natural for modeling how work actually flows across an organization."
+          },
+          {
+            "type": "heading",
+            "text": "Strengths of knowledge graphs",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "Knowledge graphs shine in areas where structure, relationships, and governance matter."
+          },
+          {
+            "type": "heading",
+            "text": "Explainability and reasoning",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "Because the graph is explicit, you can trace why a result emerged. When an AI agent surfaces a document or recommends a next step, it can show its work: \"This incident is linked to that service, which is owned by this team, whose runbook is here.\" That kind of traceability is essential for trust, debugging, anomaly detection, and regulatory compliance."
+          },
+          {
+            "type": "heading",
+            "text": "Complex queries and workflows",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "Graphs are built for multi-hop reasoning:"
+          },
+          {
+            "type": "numberList",
+            "items": [
+              "\"Show me open incidents affecting our top 20 customers in EMEA.\"",
+              "\"Which dashboards are used by the teams working on this OKR?\"",
+              "\"What are the downstream services of this database, and who owns them?\""
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": "These questions depend on graph traversal—following chains of relationships across entities—not on matching keywords."
+          },
+          {
+            "type": "heading",
+            "text": "What is a vector database?",
+            "level": "h2"
+          },
+          {
+            "type": "paragraph",
+            "content": "A vector database stores numerical representations—called vector embeddings—of unstructured data. These embeddings are produced by machine learning models and capture semantic meaning: items with similar meaning end up near each other in multi-dimensional space.\n\nInstead of asking \"which documents contain these exact words?\", a vector search converts your question into a query vector—a numerical representation of what you're looking for—then finds the stored vectors closest to it. This approach enables efficient similarity search at scale—retrieving semantically relevant results across millions of documents in milliseconds."
+          },
+          {
+            "type": "heading",
+            "text": "Strengths of vector databases",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "Vector databases are the workhorse behind a lot of modern AI applications, especially retrieval-augmented generation (RAG) and semantic search."
+          },
+          {
+            "type": "heading",
+            "text": "Semantic search across unstructured content",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "You can ingest large volumes of raw data—wiki pages, PDFs, tickets, code comments—and get useful search behavior without hand-crafted taxonomies. The model handles synonyms, paraphrases, and related concepts out of the box."
+          },
+          {
+            "type": "heading",
+            "text": "Natural fit for LLM workflows",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "Vector databases plug cleanly into large language model pipelines: embed query → retrieve neighbors → pass to the model → generate answer. This pattern is now standard for grounding AI on internal knowledge."
+          },
+          {
+            "type": "heading",
+            "text": "Choosing the right approach for your workflows",
+            "level": "h2"
+          },
+          {
+            "type": "paragraph",
+            "content": "Rather than debating abstractly, it helps to look at specific workflow scenarios."
+          },
+          {
+            "type": "heading",
+            "text": "Workflows that benefit from knowledge graphs",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "Knowledge graphs are particularly valuable when:"
+          },
+          {
+            "type": "bulletList",
+            "items": [
+              "Multi-step workflows cross teams and systems: onboarding, incident response, customer escalations, deal cycles",
+              "Traceability matters: audits, compliance reviews, executive sign-offs",
+              "Ownership and responsibility are central: \"Who should act on this alert?\" or \"Which team maintains this runbook?\"",
+              "Relationships are as important as content: recommendation systems, customer hierarchies, partner ecosystems, system dependencies"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": "For these workflows, AI agents need more than “what looks relevant.” They need to understand the complex relationships between entities and who is allowed to do what."
+          }
+        ]
+      }
+    ],
+    "author": "Cuva Team",
+    "date": "July 17, 2026",
+    "category": "BLOGS",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-16T08:11:03.758Z",
+    "updatedAt": "2026-07-17T08:12:53.459Z"
+  },
+  {
+    "id": "6a587be104cc93d90b31add0",
+    "title": "AI assistants vs AI agents: What works better?",
+    "slug": "ai-assistants-vs-ai-agents-what-works-better",
+    "excerpt": "This article explains the difference between AI assistants and AI agents, how they work, and when to use them.",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><h3>AI assistants vs AI agents: What works better?</h3><p>An AI assistant is reactive. It acts when you ask. The AI agent is proactive. It acts toward a goal on its own.</p><p>Understanding this difference is important as businesses adopt AI across everyday tools and operational systems. The choice between assistants and agents affects how tasks are executed, how much oversight is required, and how automation fits into existing workflows.</p><p>This article explains the difference between AI assistants and AI agents, how they work, and when to use them.</p><div class=\"blog-block-divider divider-simple\"></div><h3>AI assistants vs AI agents</h3><p>AI Assistants respond to prompts such as writing emails, summarizing documents, or retrieving information. AI Agents, in contrast, plan and execute multi-step workflows across tools and systems with minimal human input.</p><div class=\"blog-block-image layout-single align-center is-content\"><figure><img src=\"/uploads/1784271795593-Virtual-AI-assistant.png\" alt=\"Virtual-AI-assistant.png\" loading=\"lazy\" /><figcaption>AI Assistant</figcaption></figure><div class=\"blog-block-image-title title-bottom\">AI Assistant</div></div><p>Both rely on modern AI technology, but their role in decision-making, autonomy, and execution are fundamentally different.</p><div class=\"blog-block-table responsive\"><table><thead><tr><th>Aspect</th><th>AI assistants</th><th>AI agents</th></tr></thead><tbody><tr><td>Trigger</td><td>User prompts</td><td>Goals</td></tr><tr><td>Autonomy</td><td>Reactive\tOperates</td><td>autonomously</td></tr><tr><td>Task scope</td><td>Specific tasks</td><td>Complex tasks</td></tr><tr><td>Control</td><td>Human-led</td><td>System-led</td></tr><tr><td>Risk</td><td>Lower</td><td>Higher</td></tr><tr><td>Decision making</td><td>Remains with Human</td><td>The system can make a decision</td></tr><tr><td>Integration &amp; tool use</td><td>Conversational + limited integrations</td><td>Deep system &amp; tool orchestration</td></tr><tr><td>Best for</td><td>Daily productivity</td><td>Workflow automation</td></tr></tbody></table></div><div class=\"blog-block-divider divider-simple\"></div><h3>Why does this distinction matter in modern work?</h3><p>The Microsoft Work Trend Index for 2024 reveals that more than 75% of knowledge workers use AI tools at least once a week. Today’s businesses work across dozens of apps: email, calendar, documents, chat tools, dashboards, and analytics platforms. This creates digital overload and pushes teams to rely on AI tools for productivity.</p><p>Choosing between agents and AI assistants affects:</p><ul><li>how repetitive tasks are handled</li><li>how much human intervention is required</li><li>how safely AI systems interact with data</li><li>how errors scale across processes</li></ul><p>An assistant helps you work faster. An agent changes how work happens.</p><div class=\"blog-block-divider divider-simple\"></div><h3>What is an AI assistant?</h3><ol><li>An AI assistant is a digital helper meant to help people, not replace them. It uses natural language to respond to prompts, allowing users to perform tasks such as answering questions, writing content, summarising information, and handling administrative tasks.</li><li>AI assistants are reactive and only act when prompted. Every action starts with a user request.</li><li>Google Assistant, Gemini, and ChatGPT are some well-known examples. Even tools like Google Maps function as assistants by responding to user input rather than acting on their own.</li></ol><div class=\"blog-block-divider divider-simple\"></div></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "heading",
+            "text": "AI assistants vs AI agents: What works better?",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "An AI assistant is reactive. It acts when you ask. The AI agent is proactive. It acts toward a goal on its own.\n\nUnderstanding this difference is important as businesses adopt AI across everyday tools and operational systems. The choice between assistants and agents affects how tasks are executed, how much oversight is required, and how automation fits into existing workflows.\n\nThis article explains the difference between AI assistants and AI agents, how they work, and when to use them."
+          },
+          {
+            "type": "divider",
+            "style": "simple",
+            "icon": ""
+          },
+          {
+            "type": "heading",
+            "text": "AI assistants vs AI agents",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "AI Assistants respond to prompts such as writing emails, summarizing documents, or retrieving information. AI Agents, in contrast, plan and execute multi-step workflows across tools and systems with minimal human input."
+          },
+          {
+            "type": "image",
+            "mode": "single",
+            "imageUrl": "/uploads/1784271795593-Virtual-AI-assistant.png",
+            "imageAlt": "Virtual-AI-assistant.png",
+            "title": "AI Assistant",
+            "titlePosition": "bottom",
+            "uploadKey": "0-5",
+            "alignment": "center",
+            "width": "content",
+            "layout": "single",
+            "images": []
+          },
+          {
+            "type": "paragraph",
+            "content": "Both rely on modern AI technology, but their role in decision-making, autonomy, and execution are fundamentally different."
+          },
+          {
+            "type": "comparisonTable",
+            "featureLabel": "Aspect",
+            "optionALabel": "AI assistants",
+            "optionBLabel": "AI agents",
+            "rows": [
+              {
+                "feature": "Trigger",
+                "optionA": "User prompts",
+                "optionB": "Goals"
+              },
+              {
+                "feature": "Autonomy",
+                "optionA": "Reactive\tOperates",
+                "optionB": "autonomously"
+              },
+              {
+                "feature": "Task scope",
+                "optionA": "Specific tasks",
+                "optionB": "Complex tasks"
+              },
+              {
+                "feature": "Control",
+                "optionA": "Human-led",
+                "optionB": "System-led"
+              },
+              {
+                "feature": "Risk",
+                "optionA": "Lower",
+                "optionB": "Higher"
+              },
+              {
+                "feature": "Decision making",
+                "optionA": "Remains with Human",
+                "optionB": "The system can make a decision"
+              },
+              {
+                "feature": "Integration & tool use",
+                "optionA": "Conversational + limited integrations",
+                "optionB": "Deep system & tool orchestration"
+              },
+              {
+                "feature": "Best for",
+                "optionA": "Daily productivity",
+                "optionB": "Workflow automation"
+              }
+            ]
+          },
+          {
+            "type": "divider",
+            "style": "simple",
+            "icon": ""
+          },
+          {
+            "type": "heading",
+            "text": "Why does this distinction matter in modern work?",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "The Microsoft Work Trend Index for 2024 reveals that more than 75% of knowledge workers use AI tools at least once a week. Today’s businesses work across dozens of apps: email, calendar, documents, chat tools, dashboards, and analytics platforms. This creates digital overload and pushes teams to rely on AI tools for productivity.\n\nChoosing between agents and AI assistants affects:"
+          },
+          {
+            "type": "bulletList",
+            "items": [
+              "how repetitive tasks are handled",
+              "how much human intervention is required",
+              "how safely AI systems interact with data",
+              "how errors scale across processes"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": "An assistant helps you work faster. An agent changes how work happens."
+          },
+          {
+            "type": "divider",
+            "style": "simple",
+            "icon": ""
+          },
+          {
+            "type": "heading",
+            "text": "What is an AI assistant?",
+            "level": "h3"
+          },
+          {
+            "type": "numberList",
+            "items": [
+              "An AI assistant is a digital helper meant to help people, not replace them. It uses natural language to respond to prompts, allowing users to perform tasks such as answering questions, writing content, summarising information, and handling administrative tasks.",
+              "AI assistants are reactive and only act when prompted. Every action starts with a user request.",
+              "Google Assistant, Gemini, and ChatGPT are some well-known examples. Even tools like Google Maps function as assistants by responding to user input rather than acting on their own."
+            ]
+          },
+          {
+            "type": "divider",
+            "style": "simple",
+            "icon": ""
+          }
+        ]
+      }
+    ],
+    "author": "Cuva Team",
+    "date": "July 17, 2026",
+    "category": "USE CASES",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-16T06:36:17.757Z",
+    "updatedAt": "2026-07-17T09:57:42.494Z"
+  },
+  {
+    "id": "6a58717c04cc93d90b31adcf",
+    "title": "What are the best AI tools for enterprises in 2026?",
+    "slug": "what-are-the-best-ai-tools-for-enterprises-in-2026",
+    "excerpt": "The best AI tools for enterprises in 2026 are not individual chatbots. They are layered stacks — a horizontal context layer, one or two reasoning tools, suite-native copilots where they make sense, and domain-specific AI agents for high-value workflows — chosen for how well they fit the way a company actually works.",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><p>The best AI tools for enterprises in 2026 are not individual chatbots. They are layered stacks — a horizontal context layer, one or two reasoning tools, suite-native copilots where they make sense, and domain-specific AI agents for high-value workflows — chosen for how well they fit the way a company actually works.</p><p>That answer would have sounded unusual two years ago, when the enterprise AI conversation was mostly a bake-off between AI chatbots. There's been a structural shift since then: model quality is converging, while context quality is diverging. The largest language models are increasingly comparable on general benchmarks. But the systems that retrieve, rank, and permission company knowledge before a model ever sees a prompt — those vary enormously, and they determine whether AI is reliable enough to use in production.</p><p>Most enterprise work is not actually a prompting problem — it's a context problem. Teams need AI that can find the right document, interpret company-specific language, connect structured and unstructured internal data, respect permissions, and help get work done. When retrieval is weak, even a strong model produces brittle answers. When context is strong, a good model becomes far more useful.</p><p>So instead of asking, \"What is the best AI tool for enterprises?\" the better question is: What is the best AI stack for how your enterprise actually works?</p><div class=\"blog-block-divider divider-simple\"></div><h3>Why the “pick a chatbot” phase is over</h3><p>Early enterprise AI adoption was shaped by general-purpose AI chatbots. They were easy to test, easy to demo, and often good enough for lightweight drafting or brainstorming.</p><p>But enterprise work rarely stays inside one prompt window. Think about your teams: support leaders need open tickets, product notes, prior incidents, and Slack context before they can draft useful responses. Sellers need CRM history, call notes, customer engagement data, and the latest deck before walking into meetings. Operations leads deal with repetitive tasks that span multiple systems — analyzing data, routing work, triggering follow-ups — and need a tool that can handle the full sequence.</p><p>No single tool does all of that well. The work of enterprise AI — from knowledge retrieval to AI automation — has fragmented into four distinct jobs to be done, and understanding those jobs is more useful than comparing feature lists.</p><h3>The four jobs that define the enterprise AI stack</h3><h4>Job 1: Knowledge and retrieval</h4><p>This is the foundation. Before AI can reason, draft, or act, it needs to find the right information — across docs, tickets, email, chat, CRM records, code, and analytics — and deliver it with the right permissions and the right context. Context quality matters most here, and the gap between tools is widest.</p><p>Most AI tools rely on federated API calls, querying each app on the fly. That approach will always be slower, shallower, and more fragile than one that indexes content into a unified system of context. The stronger approach is continuous indexing combined with a knowledge graph that maps people, content, and relationships, so the system understands not just what a document says, but who owns it, who it's relevant to, and how it connects to other work.</p><p>Glean is built around this problem. It connects to 100+ enterprise apps — CRM, ITSM, project management tools, note-taking apps, collaboration platforms, code repositories — and indexes both structured and unstructured data. An AI-powered knowledge graph alongside hybrid retrieval grounds every answer in live company knowledge. In a blind evaluation of roughly 280 complex enterprise queries, human graders preferred Glean's answers 1.9x more often than ChatGPT's and 1.6x more often than Claude's on correctness — with wins spread across analysis, coding, decision-making, drafting, learning, and search. The margin came down to context — the quality and completeness of what each system could assemble before generating a response.</p><p>This is also the layer where permissions are critical. If an AI tool cannot inherit source-level permissions in real time — at item level, not just app level — it will either fail data security review or create governance risk that slows adoption later. Glean enforces permissions from each connected source system and updates them in real time, so employees only ever see answers grounded in content they are authorized to access.</p><p>Where other tools stand on this job: ChatGPT Enterprise and Claude Enterprise are strong general-purpose models, but neither provides the deep enterprise retrieval, knowledge graph, or native AI integrations needed for them to serve as the primary knowledge layer. Microsoft 365 Copilot and Gemini Enterprise retrieve well inside their own suites but are weaker across third-party systems. Specialist AI solutions like Moveworks, Atlassian Rovo, Writer, and similar tools index narrower slices of the enterprise.</p><h4>Job 2: Reasoning and creation</h4><p>Once the right context is assembled, the next job is making sense of it — drafting, analyzing, coding, summarizing, ideating, and creating.</p><p>This is where general-purpose AI model quality still matters, and where ChatGPT Enterprise remains one of the strongest options. It is broadly capable across reasoning, writing, coding help, spoken interaction, image generation, and video creation. The learning curve is minimal — employees already know how to use it, and it handles open-ended tasks that don't depend heavily on internal company context.</p><div class=\"blog-block-image layout-single align-center is-content\"><figure><img src=\"/uploads/1784271730866-image1.jpg\" alt=\"image1.jpg\" loading=\"lazy\" /><figcaption>ai agents</figcaption></figure><div class=\"blog-block-image-title title-bottom\">ai agents</div></div><p>Claude Enterprise is also strong here, particularly in careful reasoning and in recognizing when it does not have enough information to give a confident answer — a quality that matters more in enterprise settings than it does in consumer ones.</p><p>But reasoning strength alone is not enterprise context strength. A model that drafts fluently from general knowledge can still hallucinate when the answer depends on an internal policy, a customer history, or a product spec that lives in Confluence.</p><p>The more interesting enterprise pattern in 2026 is not choosing between a context platform and a reasoning tool. It is connecting them. Glean can feed ranked, permission-aware enterprise context to ChatGPT through MCP — so the reasoning model gets grounded input without needing its own connector infrastructure, and the enterprise keeps governance in one place.</p><h4>Job 4: AI automation and workflow execution</h4><p>The fourth job is the domain of AI agents — systems that help enterprises streamline business operations by turning answers into action across systems.</p><p>This job requires an agent engine that can plan and execute complex workflows, call tools, handle intermediate results, and recover from errors. It also requires the same context and permissions foundation that makes retrieval trustworthy — because an agent that can take action without proper governance is a liability, not a productivity tool.</p><p>Glean's agent platform is designed to bridge retrieval and action. Workflows can go from finding the right context to executing a next step — creating a ticket, handling routine data entry, preparing a digest, triggering a follow-up — without switching tools or stitching together separate bots. Admins can define what data and actions are in scope for each agent and review what was done.</p><p>For domain-specific AI automation, several specialist tools are worth considering:</p><div class=\"blog-block-table responsive\"><table><thead><tr><th>Tool</th><th>Strongest use case</th><th>Limitation</th></tr></thead><tbody><tr><td>Agentforce</td><td>Salesforce-centric CRM, customer engagement, predictive analytics, and process automation</td><td>Requires significant Salesforce infrastructure (Data Cloud, MuleSoft, layered licensing); not a general-purpose work assistant.</td></tr><tr><td>Atlassian</td><td>Rovo\tJira-, Confluence-, and Bitbucket-centered engineering workflows</td><td>Shallow outside the Atlassian ecosystem; limited third-party connectors.</td></tr><tr><td>Moveworks</td><td>IT and HR task automation (ticket deflection, service requests)</td><td>Narrower scope outside ITSM; limited enterprise search connectors.</td></tr><tr><td>Writer</td><td>Content creation workflows, editorial governance, and custom AI apps</td><td>Less attractive as a broad enterprise retrieval or action layer.</td></tr></tbody></table></div><p>Each of these is a reasonable add-on for the job it was built for. None is a substitute for a horizontal context and agent layer.</p><div class=\"blog-block-divider divider-dotted\"></div><h3>What the best enterprise AI tech stack looks like</h3><p>For most enterprises, the winning answer in 2026 is not a single tool. It is a layered stack where each layer does a distinct job:</p><ul><li>Glean as the enterprise context and agent layer. Knowledge, permissions, retrieval, and the ability to automate tasks across systems in one governed platform. This is the base layer.</li><li>ChatGPT Enterprise or Claude Enterprise for general reasoning and creation. Content creation, coding help, ideation, and multimodal work — connected to Glean's context layer through MCP so it stays grounded in company knowledge.</li><li>Copilot or Gemini where suite-native productivity matters. Use them for the workflows that live entirely inside Microsoft 365 or Google Workspace.</li><li>Specialists where domain ROI is clear. Agentforce for Salesforce automation, Rovo for Atlassian-centered engineering, Moveworks for IT support, Writer for content operations. These cover business automation in specific domains — not the foundation of the stack.</li></ul><p>The result maps to how businesses actually work. The stack reduces governance sprawl by centralizing permissions and knowledge in one system. And it lets companies swap or upgrade individual layers as models and tools evolve — rather than being locked into one vendor's roadmap for every job.</p><div class=\"blog-block-divider divider-dotted\"></div><h3>Frequently asked questions</h3><h4>Do enterprises need more than one AI tool?</h4><p>In most cases, yes. No single tool dominates every layer of enterprise AI — knowledge retrieval, reasoning, in-suite productivity, and workflow automation each have different architectural requirements. A layered stack that pairs a strong context platform with the best reasoning and domain tools typically outperforms a single-vendor approach.</p><h4>Can Glean work alongside ChatGPT Enterprise?</h4><p>Yes — and for many organizations, that is the strongest combination. Glean serves as the enterprise context layer, feeding ranked, permission-aware knowledge to ChatGPT through MCP. ChatGPT handles broad reasoning, drafting, and multimodal creation. The enterprise gets the best of both without centralizing all AI capability in one vendor.</p><div class=\"blog-block-divider divider-simple\"></div></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "content": "The best AI tools for enterprises in 2026 are not individual chatbots. They are layered stacks — a horizontal context layer, one or two reasoning tools, suite-native copilots where they make sense, and domain-specific AI agents for high-value workflows — chosen for how well they fit the way a company actually works.\n\nThat answer would have sounded unusual two years ago, when the enterprise AI conversation was mostly a bake-off between AI chatbots. There's been a structural shift since then: model quality is converging, while context quality is diverging. The largest language models are increasingly comparable on general benchmarks. But the systems that retrieve, rank, and permission company knowledge before a model ever sees a prompt — those vary enormously, and they determine whether AI is reliable enough to use in production.\n\nMost enterprise work is not actually a prompting problem — it's a context problem. Teams need AI that can find the right document, interpret company-specific language, connect structured and unstructured internal data, respect permissions, and help get work done. When retrieval is weak, even a strong model produces brittle answers. When context is strong, a good model becomes far more useful.\n\nSo instead of asking, \"What is the best AI tool for enterprises?\" the better question is: What is the best AI stack for how your enterprise actually works?"
+          },
+          {
+            "type": "divider",
+            "style": "simple",
+            "icon": ""
+          },
+          {
+            "type": "heading",
+            "text": "Why the “pick a chatbot” phase is over",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "Early enterprise AI adoption was shaped by general-purpose AI chatbots. They were easy to test, easy to demo, and often good enough for lightweight drafting or brainstorming.\n\nBut enterprise work rarely stays inside one prompt window. Think about your teams: support leaders need open tickets, product notes, prior incidents, and Slack context before they can draft useful responses. Sellers need CRM history, call notes, customer engagement data, and the latest deck before walking into meetings. Operations leads deal with repetitive tasks that span multiple systems — analyzing data, routing work, triggering follow-ups — and need a tool that can handle the full sequence.\n\nNo single tool does all of that well. The work of enterprise AI — from knowledge retrieval to AI automation — has fragmented into four distinct jobs to be done, and understanding those jobs is more useful than comparing feature lists."
+          },
+          {
+            "type": "heading",
+            "text": "The four jobs that define the enterprise AI stack",
+            "level": "h3"
+          },
+          {
+            "type": "heading",
+            "text": "Job 1: Knowledge and retrieval",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "This is the foundation. Before AI can reason, draft, or act, it needs to find the right information — across docs, tickets, email, chat, CRM records, code, and analytics — and deliver it with the right permissions and the right context. Context quality matters most here, and the gap between tools is widest.\n\nMost AI tools rely on federated API calls, querying each app on the fly. That approach will always be slower, shallower, and more fragile than one that indexes content into a unified system of context. The stronger approach is continuous indexing combined with a knowledge graph that maps people, content, and relationships, so the system understands not just what a document says, but who owns it, who it's relevant to, and how it connects to other work.\n\nGlean is built around this problem. It connects to 100+ enterprise apps — CRM, ITSM, project management tools, note-taking apps, collaboration platforms, code repositories — and indexes both structured and unstructured data. An AI-powered knowledge graph alongside hybrid retrieval grounds every answer in live company knowledge. In a blind evaluation of roughly 280 complex enterprise queries, human graders preferred Glean's answers 1.9x more often than ChatGPT's and 1.6x more often than Claude's on correctness — with wins spread across analysis, coding, decision-making, drafting, learning, and search. The margin came down to context — the quality and completeness of what each system could assemble before generating a response.\n\nThis is also the layer where permissions are critical. If an AI tool cannot inherit source-level permissions in real time — at item level, not just app level — it will either fail data security review or create governance risk that slows adoption later. Glean enforces permissions from each connected source system and updates them in real time, so employees only ever see answers grounded in content they are authorized to access.\n\nWhere other tools stand on this job: ChatGPT Enterprise and Claude Enterprise are strong general-purpose models, but neither provides the deep enterprise retrieval, knowledge graph, or native AI integrations needed for them to serve as the primary knowledge layer. Microsoft 365 Copilot and Gemini Enterprise retrieve well inside their own suites but are weaker across third-party systems. Specialist AI solutions like Moveworks, Atlassian Rovo, Writer, and similar tools index narrower slices of the enterprise."
+          },
+          {
+            "type": "heading",
+            "text": "Job 2: Reasoning and creation",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "Once the right context is assembled, the next job is making sense of it — drafting, analyzing, coding, summarizing, ideating, and creating.\n\nThis is where general-purpose AI model quality still matters, and where ChatGPT Enterprise remains one of the strongest options. It is broadly capable across reasoning, writing, coding help, spoken interaction, image generation, and video creation. The learning curve is minimal — employees already know how to use it, and it handles open-ended tasks that don't depend heavily on internal company context."
+          },
+          {
+            "type": "image",
+            "mode": "single",
+            "imageUrl": "/uploads/1784271730866-image1.jpg",
+            "imageAlt": "image1.jpg",
+            "title": "ai agents",
+            "titlePosition": "bottom",
+            "uploadKey": "0-9",
+            "alignment": "center",
+            "width": "content",
+            "layout": "single",
+            "images": []
+          },
+          {
+            "type": "paragraph",
+            "content": "Claude Enterprise is also strong here, particularly in careful reasoning and in recognizing when it does not have enough information to give a confident answer — a quality that matters more in enterprise settings than it does in consumer ones.\n\nBut reasoning strength alone is not enterprise context strength. A model that drafts fluently from general knowledge can still hallucinate when the answer depends on an internal policy, a customer history, or a product spec that lives in Confluence.\n\nThe more interesting enterprise pattern in 2026 is not choosing between a context platform and a reasoning tool. It is connecting them. Glean can feed ranked, permission-aware enterprise context to ChatGPT through MCP — so the reasoning model gets grounded input without needing its own connector infrastructure, and the enterprise keeps governance in one place."
+          },
+          {
+            "type": "heading",
+            "text": "Job 4: AI automation and workflow execution",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "The fourth job is the domain of AI agents — systems that help enterprises streamline business operations by turning answers into action across systems.\n\nThis job requires an agent engine that can plan and execute complex workflows, call tools, handle intermediate results, and recover from errors. It also requires the same context and permissions foundation that makes retrieval trustworthy — because an agent that can take action without proper governance is a liability, not a productivity tool.\n\nGlean's agent platform is designed to bridge retrieval and action. Workflows can go from finding the right context to executing a next step — creating a ticket, handling routine data entry, preparing a digest, triggering a follow-up — without switching tools or stitching together separate bots. Admins can define what data and actions are in scope for each agent and review what was done.\n\nFor domain-specific AI automation, several specialist tools are worth considering:"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Tool",
+              "Strongest use case",
+              "Limitation"
+            ],
+            "rows": [
+              [
+                "Agentforce",
+                "Salesforce-centric CRM, customer engagement, predictive analytics, and process automation",
+                "Requires significant Salesforce infrastructure (Data Cloud, MuleSoft, layered licensing); not a general-purpose work assistant."
+              ],
+              [
+                "Atlassian",
+                "Rovo\tJira-, Confluence-, and Bitbucket-centered engineering workflows",
+                "Shallow outside the Atlassian ecosystem; limited third-party connectors."
+              ],
+              [
+                "Moveworks",
+                "IT and HR task automation (ticket deflection, service requests)",
+                "Narrower scope outside ITSM; limited enterprise search connectors."
+              ],
+              [
+                "Writer",
+                "Content creation workflows, editorial governance, and custom AI apps",
+                "Less attractive as a broad enterprise retrieval or action layer."
+              ]
+            ],
+            "hasHeader": true,
+            "responsive": true
+          },
+          {
+            "type": "paragraph",
+            "content": "Each of these is a reasonable add-on for the job it was built for. None is a substitute for a horizontal context and agent layer."
+          },
+          {
+            "type": "divider",
+            "style": "dotted",
+            "icon": ""
+          },
+          {
+            "type": "heading",
+            "text": "What the best enterprise AI tech stack looks like",
+            "level": "h3"
+          },
+          {
+            "type": "paragraph",
+            "content": "For most enterprises, the winning answer in 2026 is not a single tool. It is a layered stack where each layer does a distinct job:"
+          },
+          {
+            "type": "bulletList",
+            "items": [
+              "Glean as the enterprise context and agent layer. Knowledge, permissions, retrieval, and the ability to automate tasks across systems in one governed platform. This is the base layer.",
+              "ChatGPT Enterprise or Claude Enterprise for general reasoning and creation. Content creation, coding help, ideation, and multimodal work — connected to Glean's context layer through MCP so it stays grounded in company knowledge.",
+              "Copilot or Gemini where suite-native productivity matters. Use them for the workflows that live entirely inside Microsoft 365 or Google Workspace.",
+              "Specialists where domain ROI is clear. Agentforce for Salesforce automation, Rovo for Atlassian-centered engineering, Moveworks for IT support, Writer for content operations. These cover business automation in specific domains — not the foundation of the stack."
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": "The result maps to how businesses actually work. The stack reduces governance sprawl by centralizing permissions and knowledge in one system. And it lets companies swap or upgrade individual layers as models and tools evolve — rather than being locked into one vendor's roadmap for every job."
+          },
+          {
+            "type": "divider",
+            "style": "dotted",
+            "icon": ""
+          },
+          {
+            "type": "heading",
+            "text": "Frequently asked questions",
+            "level": "h3"
+          },
+          {
+            "type": "heading",
+            "text": "Do enterprises need more than one AI tool?",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "In most cases, yes. No single tool dominates every layer of enterprise AI — knowledge retrieval, reasoning, in-suite productivity, and workflow automation each have different architectural requirements. A layered stack that pairs a strong context platform with the best reasoning and domain tools typically outperforms a single-vendor approach."
+          },
+          {
+            "type": "heading",
+            "text": "Can Glean work alongside ChatGPT Enterprise?",
+            "level": "h4"
+          },
+          {
+            "type": "paragraph",
+            "content": "Yes — and for many organizations, that is the strongest combination. Glean serves as the enterprise context layer, feeding ranked, permission-aware knowledge to ChatGPT through MCP. ChatGPT handles broad reasoning, drafting, and multimodal creation. The enterprise gets the best of both without centralizing all AI capability in one vendor."
+          },
+          {
+            "type": "divider",
+            "style": "simple",
+            "icon": ""
+          }
+        ]
+      }
+    ],
+    "author": "Rithvik",
+    "date": "July 17, 2026",
+    "category": "CASE STUDIES",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-16T05:51:56.194Z",
+    "updatedAt": "2026-07-17T09:57:03.777Z"
+  }
+]

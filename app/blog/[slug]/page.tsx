@@ -2,8 +2,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import { Calendar, User } from "lucide-react"
-import { connectDB } from "@/lib/db"
-import { Post } from "@/lib/Post"
+import { getPostBySlugCandidates } from "@/lib/blog-store"
 import { notFound } from "next/navigation"
 import { normalizeBlogSections, sanitizeBlogHtml, type BlogSectionBlock } from "@/lib/blog-content"
 import { AutoSlidingCarousel } from "@/components/blog/auto-sliding-carousel"
@@ -271,15 +270,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound()
   }
 
-  await connectDB()
+  // Build a small set of safe slug variants so legacy slugs ending with punctuation still resolve.
+  const slugVariants = new Set<string>([slug, decodedSlug])
 
-  // Fetch the current post (try both raw and decoded to be safe against spaces)
-  const postDoc = await Post.findOne({
-    $or: [
-      { slug: slug },
-      { slug: decodedSlug }
-    ]
-  }).lean()
+  for (const candidate of Array.from(slugVariants)) {
+    const trimmed = candidate.replace(/[?!.,:;]+$/g, "")
+    if (trimmed) {
+      slugVariants.add(trimmed)
+      slugVariants.add(`${trimmed}?`)
+    }
+  }
+
+  const postDoc = await getPostBySlugCandidates(Array.from(slugVariants))
 
   if (!postDoc) {
     notFound()
