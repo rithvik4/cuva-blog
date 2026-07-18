@@ -31,7 +31,10 @@ export type BlogImageRecord = {
 
 const SOURCE_DATA_ROOT = join(process.cwd(), "data", "blog")
 // Vercel serverless file system is read-only except /tmp.
-const RUNTIME_DATA_ROOT = process.env.BLOG_DATA_DIR || (process.env.VERCEL ? join("/tmp", "cuva-blog", "data", "blog") : SOURCE_DATA_ROOT)
+const IS_SERVERLESS_RUNTIME = Boolean(
+  process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
+)
+const RUNTIME_DATA_ROOT = process.env.BLOG_DATA_DIR || (IS_SERVERLESS_RUNTIME ? join("/tmp", "cuva-blog", "data", "blog") : SOURCE_DATA_ROOT)
 
 const POSTS_PATH = join(RUNTIME_DATA_ROOT, "posts.json")
 const IMAGES_PATH = join(RUNTIME_DATA_ROOT, "images.json")

@@ -2,6 +2,18 @@ import { mkdir, writeFile } from "fs/promises"
 import { join } from "path"
 import { createImage } from "@/lib/blog-store"
 
+const IS_SERVERLESS_RUNTIME = Boolean(
+  process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
+)
+const SOURCE_UPLOAD_DIR = join(process.cwd(), "public", "uploads")
+const RUNTIME_UPLOAD_DIR = process.env.BLOG_UPLOAD_DIR || (IS_SERVERLESS_RUNTIME ? join("/tmp", "cuva-blog", "uploads") : SOURCE_UPLOAD_DIR)
+const UPLOADS_PUBLIC_BASE = process.env.BLOG_UPLOAD_BASE_URL || (IS_SERVERLESS_RUNTIME ? "/api/uploads" : "/uploads")
+
+export function resolveUploadedFilePath(filename: string) {
+  const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, "-")
+  return join(RUNTIME_UPLOAD_DIR, safeName)
+}
+
 export async function saveBase64Image(
   base64String: string,
   filename: string,
@@ -22,7 +34,7 @@ export async function saveBase64Image(
     throw new Error("Image must be 5MB or smaller")
   }
 
-  const uploadDir = join(process.cwd(), "public/uploads")
+  const uploadDir = RUNTIME_UPLOAD_DIR
   try {
     await mkdir(uploadDir, { recursive: true })
   } catch {}
@@ -30,7 +42,7 @@ export async function saveBase64Image(
   const safeOriginalName = filename.replace(/[^a-zA-Z0-9._-]/g, "-")
   const timestampedFilename = `${Date.now()}-${safeOriginalName}`
   const filepath = join(uploadDir, timestampedFilename)
-  const imageUrl = `/uploads/${timestampedFilename}`
+  const imageUrl = `${UPLOADS_PUBLIC_BASE}/${timestampedFilename}`
 
   await writeFile(filepath, buffer as any)
 
