@@ -1,8 +1,7 @@
 import "server-only"
 
-import { mkdir, readFile, rename, writeFile } from "fs/promises"
-import { dirname, join } from "path"
 import type { BlogSection } from "@/lib/blog-content"
+import { readJsonText, writeJsonText } from "@/lib/json-storage"
 
 export type BlogPostRecord = {
   id: string
@@ -29,62 +28,17 @@ export type BlogImageRecord = {
   updatedAt: string
 }
 
-const SOURCE_DATA_ROOT = join(process.cwd(), "data", "blog")
-// Vercel serverless file system is read-only except /tmp.
-const IS_SERVERLESS_RUNTIME = Boolean(
-  process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
-)
-
-function resolveRuntimeDataRoot() {
-  const configured = process.env.BLOG_DATA_DIR?.trim()
-  const serverlessDefault = join("/tmp", "cuva-blog", "data", "blog")
-
-  if (!configured) {
-    return IS_SERVERLESS_RUNTIME ? serverlessDefault : SOURCE_DATA_ROOT
-  }
-
-  if (IS_SERVERLESS_RUNTIME && configured.startsWith("/var/task")) {
-    return serverlessDefault
-  }
-
-  return configured
-}
-
-const RUNTIME_DATA_ROOT = resolveRuntimeDataRoot()
-
-const POSTS_PATH = join(RUNTIME_DATA_ROOT, "posts.json")
-const IMAGES_PATH = join(RUNTIME_DATA_ROOT, "images.json")
-
-const POSTS_SEED_PATH = join(SOURCE_DATA_ROOT, "posts.json")
-const IMAGES_SEED_PATH = join(SOURCE_DATA_ROOT, "images.json")
+const POSTS_PATH = "data/blog/posts.json"
+const IMAGES_PATH = "data/blog/images.json"
+const POSTS_SEED_PATH = "data/blog/posts.json"
+const IMAGES_SEED_PATH = "data/blog/images.json"
 
 function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
 }
 
-async function ensureJsonArrayFile(filePath: string, seedPath?: string) {
-  await mkdir(dirname(filePath), { recursive: true })
-
-  try {
-    await readFile(filePath, "utf8")
-  } catch {
-    try {
-      if (seedPath) {
-        const seed = await readFile(seedPath, "utf8")
-        await writeFile(filePath, seed, "utf8")
-        return
-      }
-    } catch {
-      // Fall through to empty array when no seed file is available.
-    }
-
-    await writeFile(filePath, "[]\n", "utf8")
-  }
-}
-
 async function readJsonArrayFile<T>(filePath: string, seedPath?: string): Promise<T[]> {
-  await ensureJsonArrayFile(filePath, seedPath)
-  const raw = await readFile(filePath, "utf8")
+  const raw = await readJsonText(filePath, seedPath)
 
   try {
     const parsed = JSON.parse(raw)
@@ -94,12 +48,9 @@ async function readJsonArrayFile<T>(filePath: string, seedPath?: string): Promis
   }
 }
 
-async function writeJsonArrayFile<T>(filePath: string, data: T[], seedPath?: string) {
-  await ensureJsonArrayFile(filePath, seedPath)
-  const tempPath = `${filePath}.tmp`
+async function writeJsonArrayFile<T>(filePath: string, data: T[]) {
   const serialized = `${JSON.stringify(data, null, 2)}\n`
-  await writeFile(tempPath, serialized, "utf8")
-  await rename(tempPath, filePath)
+  await writeJsonText(filePath, serialized)
 }
 
 export async function listPosts(): Promise<BlogPostRecord[]> {
@@ -140,7 +91,7 @@ export async function createPost(
   }
 
   posts.push(next)
-  await writeJsonArrayFile(POSTS_PATH, posts, POSTS_SEED_PATH)
+  await writeJsonArrayFile(POSTS_PATH, posts)
   return next
 }
 
@@ -164,7 +115,7 @@ export async function updatePost(
   }
 
   posts[index] = next
-  await writeJsonArrayFile(POSTS_PATH, posts, POSTS_SEED_PATH)
+  await writeJsonArrayFile(POSTS_PATH, posts)
   return next
 }
 
@@ -176,7 +127,7 @@ export async function deletePostById(id: string): Promise<boolean> {
     return false
   }
 
-  await writeJsonArrayFile(POSTS_PATH, remaining, POSTS_SEED_PATH)
+  await writeJsonArrayFile(POSTS_PATH, remaining)
   return true
 }
 
@@ -200,6 +151,6 @@ export async function createImage(input: Omit<BlogImageRecord, "id" | "createdAt
   }
 
   images.push(next)
-  await writeJsonArrayFile(IMAGES_PATH, images, IMAGES_SEED_PATH)
+  await writeJsonArrayFile(IMAGES_PATH, images)
   return next
 }

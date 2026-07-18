@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 import { readFile } from "fs/promises"
-import { extname } from "path"
-import { resolveUploadedFilePath } from "@/lib/base64-upload"
+import { extname, join } from "path"
 
 const CONTENT_TYPES: Record<string, string> = {
   ".jpg": "image/jpeg",
@@ -19,7 +18,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ fil
       return NextResponse.json({ error: "Invalid filename" }, { status: 400 })
     }
 
-    const filePath = resolveUploadedFilePath(filename)
+    const filePath = join(process.cwd(), "public", "uploads", filename)
     const buffer = await readFile(filePath)
     const extension = extname(filename).toLowerCase()
     const contentType = CONTENT_TYPES[extension] || "application/octet-stream"

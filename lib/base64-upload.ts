@@ -1,34 +1,4 @@
-import { mkdir, writeFile } from "fs/promises"
-import { join } from "path"
-import { createImage } from "@/lib/blog-store"
-
-const IS_SERVERLESS_RUNTIME = Boolean(
-  process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
-)
-const SOURCE_UPLOAD_DIR = join(process.cwd(), "public", "uploads")
-
-function resolveRuntimeUploadDir() {
-  const configured = process.env.BLOG_UPLOAD_DIR?.trim()
-  const serverlessDefault = join("/tmp", "cuva-blog", "uploads")
-
-  if (!configured) {
-    return IS_SERVERLESS_RUNTIME ? serverlessDefault : SOURCE_UPLOAD_DIR
-  }
-
-  if (IS_SERVERLESS_RUNTIME && configured.startsWith("/var/task")) {
-    return serverlessDefault
-  }
-
-  return configured
-}
-
-const RUNTIME_UPLOAD_DIR = resolveRuntimeUploadDir()
-const UPLOADS_PUBLIC_BASE = process.env.BLOG_UPLOAD_BASE_URL || (IS_SERVERLESS_RUNTIME ? "/api/uploads" : "/uploads")
-
-export function resolveUploadedFilePath(filename: string) {
-  const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, "-")
-  return join(RUNTIME_UPLOAD_DIR, safeName)
-}
+import { createImage } from "./blog-store"
 
 export async function saveBase64Image(
   base64String: string,
@@ -50,17 +20,8 @@ export async function saveBase64Image(
     throw new Error("Image must be 5MB or smaller")
   }
 
-  const uploadDir = RUNTIME_UPLOAD_DIR
-  try {
-    await mkdir(uploadDir, { recursive: true })
-  } catch {}
-
   const safeOriginalName = filename.replace(/[^a-zA-Z0-9._-]/g, "-")
-  const timestampedFilename = `${Date.now()}-${safeOriginalName}`
-  const filepath = join(uploadDir, timestampedFilename)
-  const imageUrl = `${UPLOADS_PUBLIC_BASE}/${timestampedFilename}`
-
-  await writeFile(filepath, buffer as any)
+  const imageUrl = `data:${mimeType};base64,${base64String}`
 
   // Keep image metadata in sync with file uploads.
   await createImage({
