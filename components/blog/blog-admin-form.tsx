@@ -111,10 +111,18 @@ export function BlogAdminForm({ editingPost, initialSections }: BlogAdminFormPro
         }),
       })
 
-      const result = await response.json()
+      const rawResponse = await response.text()
+      let result: { success?: boolean; error?: string } = {}
+
+      try {
+        result = rawResponse ? JSON.parse(rawResponse) : {}
+      } catch {
+        result = {}
+      }
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || "Failed to save post")
+        const fallbackMessage = rawResponse?.slice(0, 200) || `Request failed with status ${response.status}`
+        throw new Error(result.error || fallbackMessage)
       }
 
       router.push("/blog")

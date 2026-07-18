@@ -6,7 +6,23 @@ const IS_SERVERLESS_RUNTIME = Boolean(
   process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
 )
 const SOURCE_UPLOAD_DIR = join(process.cwd(), "public", "uploads")
-const RUNTIME_UPLOAD_DIR = process.env.BLOG_UPLOAD_DIR || (IS_SERVERLESS_RUNTIME ? join("/tmp", "cuva-blog", "uploads") : SOURCE_UPLOAD_DIR)
+
+function resolveRuntimeUploadDir() {
+  const configured = process.env.BLOG_UPLOAD_DIR?.trim()
+  const serverlessDefault = join("/tmp", "cuva-blog", "uploads")
+
+  if (!configured) {
+    return IS_SERVERLESS_RUNTIME ? serverlessDefault : SOURCE_UPLOAD_DIR
+  }
+
+  if (IS_SERVERLESS_RUNTIME && configured.startsWith("/var/task")) {
+    return serverlessDefault
+  }
+
+  return configured
+}
+
+const RUNTIME_UPLOAD_DIR = resolveRuntimeUploadDir()
 const UPLOADS_PUBLIC_BASE = process.env.BLOG_UPLOAD_BASE_URL || (IS_SERVERLESS_RUNTIME ? "/api/uploads" : "/uploads")
 
 export function resolveUploadedFilePath(filename: string) {

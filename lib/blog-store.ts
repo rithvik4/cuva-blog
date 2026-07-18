@@ -34,7 +34,23 @@ const SOURCE_DATA_ROOT = join(process.cwd(), "data", "blog")
 const IS_SERVERLESS_RUNTIME = Boolean(
   process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
 )
-const RUNTIME_DATA_ROOT = process.env.BLOG_DATA_DIR || (IS_SERVERLESS_RUNTIME ? join("/tmp", "cuva-blog", "data", "blog") : SOURCE_DATA_ROOT)
+
+function resolveRuntimeDataRoot() {
+  const configured = process.env.BLOG_DATA_DIR?.trim()
+  const serverlessDefault = join("/tmp", "cuva-blog", "data", "blog")
+
+  if (!configured) {
+    return IS_SERVERLESS_RUNTIME ? serverlessDefault : SOURCE_DATA_ROOT
+  }
+
+  if (IS_SERVERLESS_RUNTIME && configured.startsWith("/var/task")) {
+    return serverlessDefault
+  }
+
+  return configured
+}
+
+const RUNTIME_DATA_ROOT = resolveRuntimeDataRoot()
 
 const POSTS_PATH = join(RUNTIME_DATA_ROOT, "posts.json")
 const IMAGES_PATH = join(RUNTIME_DATA_ROOT, "images.json")
