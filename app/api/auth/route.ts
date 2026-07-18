@@ -11,15 +11,20 @@ export async function POST(request: Request) {
     const correctUsername = process.env.ADMIN_USERNAME
     const sessionSecret = process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD
 
+    const providedUsername = typeof username === "string" ? username.trim() : ""
+    const providedPassword = typeof password === "string" ? password.trim() : ""
+    const expectedUsername = correctUsername?.trim() || ""
+    const expectedPassword = correctPassword?.trim() || ""
+
     if (!correctPassword || !correctUsername || !sessionSecret) {
       return NextResponse.json({ error: "Server misconfiguration. Admin credentials not set." }, { status: 500 })
     }
 
-    if (password === correctPassword && username === correctUsername) {
+    if (providedPassword === expectedPassword && providedUsername === expectedUsername) {
       // Get the cookie store
       const cookieStore = await cookies()
       
-      const token = await createAdminSessionToken(username)
+      const token = await createAdminSessionToken(providedUsername)
 
       cookieStore.set("admin_token", token, {
         httpOnly: true,
