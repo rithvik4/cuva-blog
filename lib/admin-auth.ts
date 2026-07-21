@@ -1,7 +1,9 @@
+import { getAdminSessionSecret } from "@/lib/admin-config"
+
 const SESSION_DURATION_MS = 24 * 60 * 60 * 1000
 
 function getSessionSecret() {
-  return process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD || ""
+  return getAdminSessionSecret()
 }
 
 function encodeBase64Url(input: string) {

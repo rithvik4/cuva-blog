@@ -1,24 +1,20 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import { createAdminSessionToken } from "@/lib/admin-auth"
+import { getAdminPassword, getAdminUsername } from "@/lib/admin-config"
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
     const { username, password } = body
 
-    const correctPassword = process.env.ADMIN_PASSWORD
-    const correctUsername = process.env.ADMIN_USERNAME
-    const sessionSecret = process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD
+    const correctUsername = getAdminUsername()
+    const correctPassword = getAdminPassword()
 
     const providedUsername = typeof username === "string" ? username.trim() : ""
     const providedPassword = typeof password === "string" ? password.trim() : ""
-    const expectedUsername = correctUsername?.trim() || ""
-    const expectedPassword = correctPassword?.trim() || ""
-
-    if (!correctPassword || !correctUsername || !sessionSecret) {
-      return NextResponse.json({ error: "Server misconfiguration. Admin credentials not set." }, { status: 500 })
-    }
+    const expectedUsername = correctUsername
+    const expectedPassword = correctPassword
 
     if (providedPassword === expectedPassword && providedUsername === expectedUsername) {
       // Get the cookie store

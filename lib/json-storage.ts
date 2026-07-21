@@ -8,6 +8,10 @@ type GitHubStorageConfig = {
   token: string
 }
 
+const IS_SERVER_RUNTIME = Boolean(
+  process.env.VERCEL || process.env.AWS_EXECUTION_ENV || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT,
+)
+
 function getGitHubStorageConfig(): GitHubStorageConfig | null {
   const repoSlug = process.env.VERCEL_GIT_REPO_SLUG || process.env.GITHUB_REPOSITORY || ""
   const repoOwner = process.env.VERCEL_GIT_REPO_OWNER || repoSlug.split("/")[0] || ""
@@ -153,6 +157,10 @@ export async function readJsonText(filePath: string, seedPath?: string) {
     return gitHubText
   }
 
+  if (IS_SERVER_RUNTIME) {
+    throw new Error("GitHub-backed JSON storage is not configured on the server. Set GITHUB_TOKEN with repo contents write access.")
+  }
+
   return readLocalJsonText(filePath, seedPath)
 }
 
@@ -161,6 +169,10 @@ export async function writeJsonText(filePath: string, content: string) {
 
   if (wroteToGitHub) {
     return
+  }
+
+  if (IS_SERVER_RUNTIME) {
+    throw new Error("Refusing to write JSON to local server storage. Configure GITHUB_TOKEN so Vercel writes to repository JSON files.")
   }
 
   await writeLocalJsonText(filePath, content)
