@@ -1,5 +1,37 @@
 [
   {
+    "id": "1784380581166-y735lmfj",
+    "title": "testsdfghjkloiuytrdcvbnm,l;oiuygfc",
+    "slug": "test-2",
+    "excerpt": "testqwertyuiopoiuytfvbnkloiuygtfcvb",
+    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><h2>test qwertyuiohgfcxc vbnm,</h2></div></section>",
+    "sections": [
+      {
+        "heading": "",
+        "subheading": "",
+        "content": "",
+        "bulletPoints": [],
+        "imageUrl": "",
+        "imageAlt": "",
+        "imagePosition": "right",
+        "blocks": [
+          {
+            "type": "heading",
+            "text": "test qwertyuiohgfcxc vbnm,",
+            "level": "h2"
+          }
+        ]
+      }
+    ],
+    "author": "Cuva Team",
+    "date": "July 22, 2026",
+    "category": "USE CASES",
+    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
+    "image": null,
+    "createdAt": "2026-07-18T13:16:21.166Z",
+    "updatedAt": "2026-07-22T12:05:02.310Z"
+  },
+  {
     "id": "1784366456726-93l1w54j",
     "title": "TEST",
     "slug": "test",
@@ -30,37 +62,5 @@
     "image": null,
     "createdAt": "2026-07-18T09:20:56.726Z",
     "updatedAt": "2026-07-18T09:20:56.726Z"
-  },
-  {
-    "id": "1784380581166-y735lmfj",
-    "title": "test",
-    "slug": "test-2",
-    "excerpt": "test",
-    "content": "<section class=\"blog-section\"><div class=\"blog-section-copy\"><h2>test</h2></div></section>",
-    "sections": [
-      {
-        "heading": "",
-        "subheading": "",
-        "content": "",
-        "bulletPoints": [],
-        "imageUrl": "",
-        "imageAlt": "",
-        "imagePosition": "right",
-        "blocks": [
-          {
-            "type": "heading",
-            "text": "test",
-            "level": "h2"
-          }
-        ]
-      }
-    ],
-    "author": "Cuva Team",
-    "date": "July 18, 2026",
-    "category": "BLOGS",
-    "imageGradient": "from-[#f1f8e9] to-[#e8f5e9]",
-    "image": null,
-    "createdAt": "2026-07-18T13:16:21.166Z",
-    "updatedAt": "2026-07-18T13:16:21.166Z"
   }
 ]
